@@ -27,13 +27,22 @@ export class AppComponent {
     );
   }
 
-  addItem(description: string) {
-    this.allItems.unshift({
-      description,
-      done: false,
-    });
+  addItem(description: string): void {
+    if (description) {
+      const newItem = { description, done: false };
+      this.items.push(newItem);
+    }
   }
   remove(item: Item) {
     this.allItems.splice(this.allItems.indexOf(item), 1);
+  }
+  isAllSelected(): boolean {
+    return this.items.every((item) => item.done);
+  }
+  toggleSelectAll(): void {
+    const allSelected = this.isAllSelected();
+    for (const item of this.items) {
+      item.done = !allSelected;
+    }
   }
 }
